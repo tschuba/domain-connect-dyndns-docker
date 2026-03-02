@@ -6,4 +6,4 @@ services:
       dockerfile: ./src/main/Docker/Dockerfile
     container_name: domain-connect-dyndns
     volumes:
-      - ./config:/app/config
+      - ./config/domain-connect-dyndns.json:/app/config/domain-connect-dyndns.json
