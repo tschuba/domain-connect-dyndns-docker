@@ -4,11 +4,13 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-# fail with exception if the file /app/config/domain-connect-dyndns.json does not exist
-if [ ! -f /app/config/domain-connect-dyndns.json ]; then
-    echo "Error: The file /app/config/domain-connect-dyndns.json does not exist."
+CONFIG_FILE=/app/config/domain-connect-dyndns.json
+
+# fail with exception if the config file does not exist
+if [ ! -f $CONFIG_FILE ]; then
+    echo "Error: The file $CONFIG_FILE does not exist."
     exit 1
 fi
 
 # update all dynamic DNS records
-domain-connect-dyndns update --all --config /app/config/domain-connect-dyndns.json
+domain-connect-dyndns update --all --config $CONFIG_FILE
