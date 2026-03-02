@@ -8,7 +8,7 @@ CONFIG_FILE=/app/config/domain-connect-dyndns.json
 INTERVAL=${CRON_INTERVAL:-"*/15 * * * *"}
 
 # setup cron job if it does not exist
-if [ ! -f /etc/cron.d/app-cron ]; then
+if [ ! -f /etc/cron.d/dyndns-cron ]; then
 
 cat > /etc/cron.d/dyndns-cron <<EOF
 SHELL=/bin/bash
@@ -16,7 +16,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 $INTERVAL root /app/run.sh >> /proc/1/fd/1 2>&1
 EOF
 
-chmod 0644 /etc/cron.d/app-cron
+chmod 0644 /etc/cron.d/dyndns-cron
 
 fi
 
