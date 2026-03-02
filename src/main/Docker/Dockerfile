@@ -22,4 +22,6 @@ WORKDIR /app
 COPY src/main/scripts/domain-connect-dyndns.sh ./run.sh
 RUN chmod +x ./run.sh
 
+VOLUME /app/config
+
 ENTRYPOINT ["/app/run.sh"]

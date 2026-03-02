@@ -1,0 +1,9 @@
+services:
+  domain-connect-dyndns:
+    image: tschuba/domain-connect-dyndns
+    build:
+      context: .
+      dockerfile: ./src/main/Docker/Dockerfile
+    container_name: domain-connect-dyndns
+    volumes:
+      - ./config:/app/config
