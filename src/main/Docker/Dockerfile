@@ -22,6 +22,6 @@ RUN chmod +x ./entrypoint.sh ./run.sh && mkdir -p /var/log
 
 VOLUME /app/config
 
-ENV CRON_INTERVAL='15 * * * *'
+ENV CRON_INTERVAL='*/15 * * * *'
 
 ENTRYPOINT ["/app/entrypoint.sh"]

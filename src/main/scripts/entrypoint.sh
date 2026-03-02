@@ -5,7 +5,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 CONFIG_FILE=/app/config/domain-connect-dyndns.json
-INTERVAL=${CRON_INTERVAL:-"15 * * * *"}
+INTERVAL=${CRON_INTERVAL:-"*/15 * * * *"}
 
 # setup cron job if it does not exist
 if [ ! -f /etc/cron.d/app-cron ]; then
