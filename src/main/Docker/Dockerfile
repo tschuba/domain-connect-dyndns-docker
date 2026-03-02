@@ -17,9 +17,11 @@ EOF
 RUN pip3 install --no-cache-dir domain-connect-dyndns --break-system-packages
 
 WORKDIR /app
-COPY src/main/scripts/domain-connect-dyndns.sh ./run.sh
-RUN chmod +x ./run.sh
+COPY src/main/scripts/* ./
+RUN chmod +x ./entrypoint.sh ./run.sh && mkdir -p /var/log
 
 VOLUME /app/config
 
-ENTRYPOINT ["/app/run.sh"]
+ENV CRON_INTERVAL='15 * * * *'
+
+ENTRYPOINT ["/app/entrypoint.sh"]
