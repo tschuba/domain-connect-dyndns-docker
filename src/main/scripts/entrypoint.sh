@@ -11,12 +11,17 @@ INTERVAL=${CRON_INTERVAL:-"15 * * * *"}
 if [ ! -f /etc/cron.d/app-cron ]; then
 
 cat > /etc/cron.d/app-cron <<EOF
-$INTERVAL /app/run.sh >> /var/log/cron.log 2>&1
+$INTERVAL /app/run.sh >> /proc/1/fd/1 2>&1
 EOF
 
 fi
 
-# start cron daemon in foreground to keep the container running
+# update all dynamic DNS records
+./run.sh
+
+# start cron daemon to keep the container running
 service cron start
+
+# keep container running
 tail -f /dev/null
 
