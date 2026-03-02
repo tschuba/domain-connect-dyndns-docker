@@ -10,7 +10,7 @@ INTERVAL=${CRON_INTERVAL:-"*/15 * * * *"}
 # setup cron job if it does not exist
 if [ ! -f /etc/cron.d/app-cron ]; then
 
-cat > /etc/cron.d/app-cron <<EOF
+cat > /etc/cron.d/dyndns-cron <<EOF
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 $INTERVAL root /app/run.sh >> /proc/1/fd/1 2>&1
@@ -24,4 +24,5 @@ fi
 /app/run.sh
 
 # start cron and keep the container running
+echo "Starting cron with interval: $INTERVAL"
 cron -f -l 2
