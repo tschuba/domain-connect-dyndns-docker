@@ -25,4 +25,4 @@ fi
 
 # start cron and keep the container running
 echo "Starting cron with interval: $INTERVAL"
-cron -f -l 2
+exec cron -f -l 2

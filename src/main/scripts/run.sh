@@ -12,5 +12,7 @@ if [ ! -f $CONFIG_FILE ]; then
     exit 1
 fi
 
-# update all dynamic DNS records
+# update all dynamic DNS records; the marker file feeds the Docker healthcheck
+rm -f /tmp/last_success
 domain-connect-dyndns update --all --config $CONFIG_FILE
+touch /tmp/last_success
