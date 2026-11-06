@@ -19,6 +19,32 @@ To run the docker container:
 docker compose up -d
 ```
 
+# Configuration
+
+The config file `config/domain-connect-dyndns.json` contains one entry per domain (provider, API URL, access/refresh tokens, IP state). It is written by `domain-connect-dyndns setup`; don't edit it by hand.
+
+## Create a new config
+
+```shell
+pip3 install domain-connect-dyndns
+mkdir -p config && touch ./config/domain-connect-dyndns.json
+domain-connect-dyndns --config ./config/domain-connect-dyndns.json --domain example.com setup
+```
+
+Follow the printed instructions (log in at your provider and authorize). The domain is then stored in the file.
+
+## Add a domain to an existing config
+
+Run `setup` again with the same `--config` file and the additional domain. Existing entries are kept:
+
+```shell
+domain-connect-dyndns --config ./config/domain-connect-dyndns.json --domain sub.example.com setup
+```
+
+Subdomains are separate entries (e.g. `example.com` and `wache.example.com`). Afterwards restart the container: `docker compose restart`.
+
+The file is mounted into the container (see `docker-compose.yaml`) and contains secrets, so keep it out of version control.
+
 # Releases
 
 The image is published to `ghcr.io/tschuba/domain-connect-dyndns` (`linux/amd64`, `linux/arm64`).
