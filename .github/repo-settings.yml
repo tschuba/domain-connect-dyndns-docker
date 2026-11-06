@@ -1,0 +1,32 @@
+rulesets:
+  - name: protect-main
+    target: branch
+    enforcement: active
+    conditions:
+      ref_name:
+        include: ["~DEFAULT_BRANCH"]
+    bypass_actors:
+      - actor_type: RepositoryRole
+        actor_id: 5  # admin role
+        bypass_mode: always
+    rules:
+      - type: required_status_checks
+        parameters:
+          required_status_checks:
+            - context: "PR Title"
+            - context: "Bump Version"
+          strict_required_status_checks_policy: true
+      - type: non_fast_forward
+      - type: pull_request
+        parameters:
+          required_approving_review_count: 0
+          dismiss_stale_reviews_on_push: true
+          require_code_owner_review: false
+          require_last_push_approval: false
+          required_review_thread_resolution: true
+
+merge_strategy:
+  allow_squash_merge: true
+  allow_merge_commit: false
+  allow_rebase_merge: false
+  delete_branch_on_merge: true

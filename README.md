@@ -18,3 +18,20 @@ To run the docker container:
 ```shell
 docker compose up -d
 ```
+
+# Releases
+
+The image is published to `ghcr.io/tschuba/domain-connect-dyndns` (`linux/amd64`, `linux/arm64`).
+
+1. Open a PR with a Conventional Commits title (`feat:`, `fix:`, ...). If `src/` changed, a workflow bumps `VERSION` in the PR branch (`feat` = minor, `fix`/`perf` = patch, `!` = major).
+2. Merge to `main`: the image is pushed as `edge`, and a tag `vX.Y.Z` plus a draft release are created.
+3. Publish the draft release: the image is pushed as `X.Y.Z`, `X.Y`, `X` and `latest`.
+
+## One-time repository setup
+
+Create the secret `RELEASE_TOKEN`. Pushes made with the default `GITHUB_TOKEN` don't trigger other workflows, so a PAT is needed for the version bump, tagging and the image publish.
+
+1. GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens: create a token for this repository with `Contents: Read and write`.
+2. Repository → Settings → Secrets and variables → Actions → New repository secret: `RELEASE_TOKEN`. For Dependabot PRs, add it under *Dependabot* as well.
+
+Optionally, create the secret `REPO_SETTINGS_TOKEN` (fine-grained PAT, `Administration: Read and write`, `Contents: Read-only`). The workflow "Apply repo settings" then applies `.github/repo-settings.yml` (PR-only merges to `main`, squash merge only, required checks) on changes and nightly. Run it once manually via Actions → "Apply repo settings".
