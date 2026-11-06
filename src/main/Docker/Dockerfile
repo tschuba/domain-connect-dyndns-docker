@@ -24,4 +24,8 @@ VOLUME /app/config
 
 ENV CRON_INTERVAL='*/15 * * * *'
 
+# healthy = cron is PID 1 and the last update run succeeded (no procps needed)
+HEALTHCHECK --interval=60s --timeout=10s --start-period=60s --retries=3 \
+    CMD grep -qx cron /proc/1/comm && test -f /tmp/last_success || exit 1
+
 ENTRYPOINT ["/app/entrypoint.sh"]
